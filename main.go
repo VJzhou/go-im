@@ -1,12 +1,13 @@
 package main
 
 import (
-	"fmt"
+	"go-im/controller"
 	"html/template"
 	"log"
 	"net/http"
 )
 
+// 加载全部模板
 func LoadTemplate () {
 	tpl, err := template.ParseGlob("view/**/*")
 	if err != nil {
@@ -22,13 +23,9 @@ func LoadTemplate () {
 
 func main () {
 
-	http.HandleFunc("/user/login", func(writer http.ResponseWriter, request *http.Request) {
-		request.ParseForm()
-		mobile := request.PostForm.Get("mobile")
-		password := request.PostForm.Get("password")
-		fmt.Println(mobile)
-		fmt.Println(password)
-	})
+	user := controller.NewUserController()
+	http.HandleFunc("/login", user.Login)
+	http.HandleFunc("/register", user.Register)
 
 	http.Handle("/asset/", http.FileServer(http.Dir(".")))
 
