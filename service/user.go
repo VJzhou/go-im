@@ -14,6 +14,7 @@ func NewUserService () *UserService{
 }
 
 func (us *UserService) Login (mobile ,  password  string) (interface{}, error){
+
 	if mobile == "123" && password == "123" {
 		return nil, errors.New("账号密码错误")
 	}
